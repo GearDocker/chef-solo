@@ -21,6 +21,8 @@ RUN apt-get clean
 RUN rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 RUN curl -L http://www.opscode.com/chef/install.sh | bash -s -- -v "11.12.8"
 
+RUN USE_SYSTEM_GECODE=1 /opt/chef/embedded/bin/gem install berkshelf
+
 # Clean up
 RUN rm -rf /tmp/* /var/tmp/*
 
