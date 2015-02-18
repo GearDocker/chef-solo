@@ -1,11 +1,10 @@
-FROM gear2000:docker-ruby
+FROM gear2000/docker-ruby
 MAINTAINER Gary Leong <gwleong@gmail.com>
 
 RUN (apt-get -y update; \
       apt-get -y install python-software-properties curl build-essential libxml2-dev libxslt-dev git ruby ruby-dev ca-certificates sudo net-tools vim; \
       apt-get -y dist-upgrade; \
       apt-get -y install locales; \
-      curl -L https://www.getchef.com/chef/install.sh | sudo bash; \
       echo "gem: --no-ri --no-rdoc" > ~/.gemrc; \
       gem install berkshelf; \
       apt-get autoremove -y; \
@@ -13,9 +12,7 @@ RUN (apt-get -y update; \
       rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*; \
       rm -rf /var/tmp/*)
 
-RUN (apt-get -y update; \
-      echo "gem: --no-ri --no-rdoc" > ~/.gemrc; \
-      gem install berkshelf; \
+RUN (curl -L https://www.getchef.com/chef/install.sh | sudo bash; \
       apt-get autoremove -y; \
       apt-get clean -y; \
       rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*; \
