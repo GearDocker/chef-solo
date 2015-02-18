@@ -1,28 +1,26 @@
-FROM ubuntu:14.04
+FROM gear2000:docker-ruby
 MAINTAINER Gary Leong <gwleong@gmail.com>
 
-# Set locale to avoid apt-get warnings in OSX
-RUN locale-gen en_US.UTF-8 && \
-    update-locale LANG=en_US.UTF-8
-ENV LC_ALL C
-ENV LC_ALL en_US.UTF-8
+RUN (apt-get -y update; \
+      apt-get -y install python-software-properties curl build-essential libxml2-dev libxslt-dev git ruby ruby-dev ca-certificates sudo net-tools vim; \
+      apt-get -y dist-upgrade; \
+      apt-get -y install locales; \
+      curl -L https://www.getchef.com/chef/install.sh | sudo bash; \
+      echo "gem: --no-ri --no-rdoc" > ~/.gemrc; \
+      gem install berkshelf; \
+      apt-get autoremove -y; \
+      apt-get clean -y; \
+      rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*; \
+      rm -rf /var/tmp/*)
 
-RUN apt-get update -y 
-RUN apt-get install -y --no-install-recommends \
-      curl \
-      wget \
-      git \
-      build-essential \
-      libxml2-dev \
-      libxslt-dev 
+RUN (apt-get -y update; \
+      echo "gem: --no-ri --no-rdoc" > ~/.gemrc; \
+      gem install berkshelf; \
+      apt-get autoremove -y; \
+      apt-get clean -y; \
+      rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*; \
+      rm -rf /var/tmp/*)
 
-RUN apt-get install -y --no-install-recommends libgecode-dev 
-RUN apt-get clean 
-RUN rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
-RUN curl -L http://www.opscode.com/chef/install.sh | bash -s -- -v "11.12.8"
-
-RUN USE_SYSTEM_GECODE=1 /opt/chef/embedded/bin/gem install berkshelf
-
-# Clean up
-RUN rm -rf /tmp/* /var/tmp/*
-
+RUN echo 'en_US.UTF-8 UTF-8'>>/etc/locale.gen
+RUN locale-gen
+ENV LANG en_US.UTF-8
