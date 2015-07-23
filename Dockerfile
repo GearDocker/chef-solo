@@ -1,4 +1,4 @@
-FROM gear2000/docker-ruby
+FROM gear2000/ruby
 MAINTAINER Gary Leong <gwleong@gmail.com>
 
 RUN (apt-get -y update; \
