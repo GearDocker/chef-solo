@@ -1,4 +1,4 @@
-FROM gear2000/ruby:16.04
+FROM gear2000/ruby:14.04
 MAINTAINER Gary Leong <gwleong@gmail.com>
 
 RUN (apt-get -y update; \
@@ -11,8 +11,6 @@ RUN (apt-get -y update; \
       apt-get clean -y; \
       rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*; \
       rm -rf /var/tmp/*)
-
-#RUN curl -L http://www.opscode.com/chef/install.sh | bash -s -- -v "12.3.0"
 
 RUN (curl -L https://www.getchef.com/chef/install.sh | bash -s -- -v "12.3.0"; \
       apt-get autoremove -y; \
