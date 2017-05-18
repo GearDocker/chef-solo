@@ -12,8 +12,6 @@ RUN (apt-get -y update; \
       rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*; \
       rm -rf /var/tmp/*)
 
-#RUN curl -L http://www.opscode.com/chef/install.sh | bash -s -- -v "12.3.0"
-
 RUN (curl -L https://www.getchef.com/chef/install.sh | bash -s -- -v "12.3.0"; \
       apt-get autoremove -y; \
       apt-get clean -y; \
